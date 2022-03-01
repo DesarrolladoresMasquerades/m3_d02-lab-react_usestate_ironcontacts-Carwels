@@ -1,23 +1,59 @@
 import logo from './logo.svg';
 import './App.css';
+import listContacts from "./contacts.json";
+import { useState } from "react"
+
 
 function App() {
+  
+  const contacts = listContacts.slice(0,5)
+  const [famous, setFamous] = useState(listContacts.slice(0,5))
+
+  function randomFamous() {
+    let random = listContacts[Math.floor(Math.random() * listContacts.length)]
+    let exists = false
+
+    for(let i=0; i < famous.length; i++) {
+      if(famous.includes(random)) {
+      exists = true
+      }
+    }
+    if(!exists) {
+      setFamous(famous.concat([random]))
+    }
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <button onClick={randomFamous}>Add Random Contact</button>
+    <button >Sort by popularity</button>
+    <button >Sort by name</button>
+     <table>
+            <thead>
+            <tr>
+              <th>Picture</th>
+              <th>Name</th>
+              <th>Popularity</th>
+              <th>Won Oscar</th>
+              <th>Won Emmy</th>
+            </tr>
+            </thead>
+            <tbody>
+      {famous.map(contact => {
+      
+        return(
+            <tr key={contact.id}>
+              <td><img src={contact.pictureUrl} alt="pictures" width="100px" height="100px"/></td>
+             <td><h3>{contact.name}</h3></td>
+             <td>{contact.popularity}</td>
+             {contact.wonOscar &&<td>&#127942;</td>}
+             {contact.wonEmmy &&<td>&#127942;</td>}
+
+            </tr>
+        )
+      })}
+            </tbody>
+    </table>
     </div>
   );
 }
