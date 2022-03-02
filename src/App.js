@@ -7,7 +7,7 @@ import { useState } from "react"
 function App() {
   
   const contacts = listContacts.slice(0,5)
-  const [famous, setFamous] = useState(listContacts.slice(0,5))
+  const [famous, setFamous] = useState(contacts)
 
   function randomFamous() {
     let random = listContacts[Math.floor(Math.random() * listContacts.length)]
